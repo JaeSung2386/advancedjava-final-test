@@ -19,13 +19,20 @@ public class LoginMain {
 		System.out.println("비밀번호를 입력하시오 : ");
 		String password = scanner.nextLine();
 		
-		/*
-		 *  로그인 처리 부분을 완성 합니다.
-		 */
+		User user = new User(id, password);
+		
+		try {
+			login(joinUsers, user);
+		} catch (UserNotFoundException e) {
+			System.out.println("존재하지 않는 사용자입니다.");
+		} catch (PasswordDismatchException e) {
+			System.out.println("비밀번호가 틀렸습니다.");
+		}
 		
 
 	}
 	
+	//return값을 달리해서 에러 문구 처리
 	public static void login(List<User> users, User user ) throws UserNotFoundException, PasswordDismatchException {
 		if( !users.contains(user) ){
 			throw new UserNotFoundException();
@@ -36,5 +43,6 @@ public class LoginMain {
 		if( !savedUser.getPassword().equals( user.getPassword()) ){
 			throw new PasswordDismatchException();
 		}
+		System.out.println("로그인 성공");
 	}
 }
